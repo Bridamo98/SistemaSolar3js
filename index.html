@@ -33,17 +33,33 @@
 
         //Textures
         var loader = new THREE.TextureLoader();
-        var texture = loader.load("textura.jpg");
+        var texture = loader.load("earth.jpg");
         var material = new THREE.MeshStandardMaterial({
             map: texture
         });
-        var texture2 = loader.load("texSun.jpg");
+        var texture2 = loader.load("sun.jpg");
         var material2 = new THREE.MeshBasicMaterial({
             map: texture2
         });
-        var texture3 = loader.load("texMoon.jpg");
+        var texture3 = loader.load("moon.jpg");
         var material3 = new THREE.MeshStandardMaterial({
             map: texture3
+        });
+        var texture4 = loader.load("space.jpg");
+        var material4 = new THREE.MeshStandardMaterial({
+            map: texture4
+        });
+        var texture5 = loader.load("mercury.jpg");
+        var material5 = new THREE.MeshStandardMaterial({
+            map: texture5
+        });
+        var texture6 = loader.load("venus.jpg");
+        var material6 = new THREE.MeshStandardMaterial({
+            map: texture6
+        });
+        var texture7 = loader.load("mars.jpg");
+        var material7 = new THREE.MeshStandardMaterial({
+            map: texture7
         });
 
         //Objects
@@ -51,8 +67,14 @@
         var sunO = new THREE.Mesh(geometry, material2);
         var geometry2 = new THREE.SphereGeometry(1, 32, 32);
         var earthO = new THREE.Mesh(geometry2, material);
-        var geometry3 = new THREE.SphereGeometry(0.5, 32, 32);
+        var geometry3 = new THREE.SphereGeometry(0.25, 32, 32);
         var moonO = new THREE.Mesh(geometry3, material3);
+        var geometry4 = new THREE.SphereGeometry(0.38, 32, 32);
+        var mercuryO = new THREE.Mesh(geometry4, material5);
+        var geometry5 = new THREE.SphereGeometry(0.95, 32, 32);
+        var venusO = new THREE.Mesh(geometry5, material6);
+        var geometry6 = new THREE.SphereGeometry(0.53, 32, 32);
+        var marsO = new THREE.Mesh(geometry6, material7);
 
         //Line
         var material = new THREE.LineBasicMaterial({ color: 0xff0000 });
@@ -69,17 +91,21 @@
 
         //Lights
         var light = new THREE.PointLight(0xffffff, 1);
-        light.position.set(0, 50, 0);
+        light.position.set(0, 0, 0);
 
         //scene
-        camera.position.set(0, 20, 20);
+        scene.background = texture4;
+        camera.position.set(0, 20, 50);
         camera.lookAt(0, 0, 0);
         scene.add(light);
 
         sunC.add(sunO);
+        sunC.add(mercuryO);
+        sunC.add(venusO);
         earthC.add(earthO);
         earthC.add(moonO);
         sunC.add(earthC);
+        sunC.add(marsO);
 
         moonO.position.x = 2;
 
@@ -102,10 +128,16 @@
 
         function animateObjects(t){
             rotate(sunO, 0.01);
+            rotate(mercuryO, 0.01);
+            rotate(venusO, 0.01);
             rotate(earthO, 0.01);
             rotate(moonO, 0.01);
-            translate(earthC, t, 20);
-            translate(moonO, 10*t, 5);
+            rotate(marsO, 0.01);
+            translate(mercuryO, t*4, 20);
+            translate(venusO, t*2, 30);
+            translate(earthC, t, 35);
+            translate(moonO, 10*t, 2);
+            translate(marsO, t*0.5, 50);
         }
 
         function rotate(object, speed){
